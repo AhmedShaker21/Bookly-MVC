@@ -1,0 +1,193 @@
+﻿@model List<Category>
+<h1 class="page-title">Category List</h1>
+
+<div class="card shadow">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Categories</h5>
+        <a asp-controller="Category" asp-action="Create" class="btn btn-success btn-sm">
+            <i class="fas fa-plus"></i> Add New
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="categoryTable" class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Display Order</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.OrderBy(u=>u.DisplayOrder))
+                    {
+                        <tr class="category-row" data-id="@obj.Id">
+                            <td>
+                                <span class="category-name">@obj.Name</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-info text-dark">@obj.DisplayOrder</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group w-75" role="group">
+                                    <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary btn-sm mx-2">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger btn-sm delete-btn mx-2">
+                                        <i class="bi bi-trash-fill"></i>  Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable for advanced features
+            $('#categoryTable').DataTable({
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "responsive": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 2 }
+                ]
+            });
+
+            // Add row hover animation
+            $('.category-row').hover(
+                function() { $(this).addClass('row-highlight'); },
+                function() { $(this).removeClass('row-highlight'); }
+            );
+
+            // Confirmation dialog for delete
+            $('.delete-btn').click(function(e) {
+                if (!confirm('Are you sure you want to delete this category?')) {
+                    e.preventDefault();
+                }
+            });
+
+            // Add clicking animation
+            $('.btn').click(function() {
+                $(this).addClass('btn-click');
+                setTimeout(() => {
+                    $(this).removeClass('btn-click');
+                }, 200);
+            });
+        });
+    </script>
+
+    <style>
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .page-title:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100px;
+                height: 3px;
+                background: linear-gradient(to right, #3498db, #2ecc71);
+                border-radius: 3px;
+            }
+
+        .card {
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            font-weight: 600;
+            padding: 15px 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+            .table th {
+                font-weight: 600;
+                background-color: #f8f9fa;
+                border-bottom: 2px solid #dee2e6;
+            }
+
+        .category-row {
+            transition: all 0.3s ease;
+        }
+
+        .row-highlight {
+            background-color: #f0f7ff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .badge {
+            font-size: 85%;
+            padding: 0.35em 0.65em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-group .btn {
+            transition: all 0.2s ease;
+            margin: 0 2px;
+        }
+
+        .btn-click {
+            transform: scale(0.95);
+        }
+
+        /* Animation for new/updated rows */
+        .new-row {
+            animation: highlightNew 2s ease;
+        }
+        /* Make the DataTable controls nicer */
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin-left: 5px;
+        }
+
+        .dataTables_wrapper .dataTables_length select {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px 10px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+                background: #3498db !important;
+                border-color: #3498db !important;
+                color: white !important;
+            }
+    </style>
+}

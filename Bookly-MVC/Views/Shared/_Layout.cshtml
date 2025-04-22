@@ -8,43 +8,183 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Bookly_MVC.styles.css" asp-append-version="true" />
+    <!-- Google Fonts - Poppins & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animation library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --secondary: #10B981;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --accent: #F59E0B;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #F9FAFB;
+        }
+
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Enhanced Navbar */
+        .navbar {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            padding: 0.8rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+            .navbar-brand:before {
+                content: "📚";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.2rem;
+            }
+
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 600;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: white !important;
+                background-color: rgba(255, 255, 255, 0.1);
+                transform: translateY(-2px);
+            }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: var(--dark);
+            color: var(--light) !important;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+            .footer a {
+                color: var(--secondary);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+                .footer a:hover {
+                    color: white;
+                    text-decoration: underline;
+                }
+
+        /* Animation classes */
+        .nav-item {
+            transition: transform 0.3s;
+        }
+
+            .nav-item:hover {
+                transform: translateY(-2px);
+            }
+
+        /* Active link highlight */
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+
+        /* Container enhancement */
+        .container {
+            padding: 1.5rem;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3 animate__animated animate__fadeIn">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bookly_MVC</a>
+                <a class="navbar-brand animate__animated animate__fadeInLeft" asp-area="" asp-controller="Home" asp-action="Index">Bookly</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item animate__animated animate__fadeInDown" style="animation-delay: 0.1s;">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item animate__animated animate__fadeInDown" style="animation-delay: 0.2s;">
+                            <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
+                        </li>
+                        <li class="nav-item animate__animated animate__fadeInDown" style="animation-delay: 0.3s;">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
         <main role="main" class="pb-3">
+            <partial name="_Notifications" />
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Bookly_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted animate__animated animate__fadeIn" style="animation-delay: 0.5s;">
+        <div class="container text-center">
+            &copy; 2025 - Bookly - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Add active class to current page link
+        $(document).ready(function() {
+            var currentUrl = window.location.href.split('?')[0];
+            $('.navbar-nav .nav-link').each(function() {
+                var linkUrl = this.href.split('?')[0];
+                if (currentUrl === linkUrl) {
+                    $(this).addClass('active');
+                }
+            });
+
+            // Navbar scroll effect
+            $(window).scroll(function() {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').css('padding', '0.5rem 1rem');
+                    $('.navbar').css('box-shadow', '0 4px 6px rgba(0, 0, 0, 0.1)');
+                } else {
+                    $('.navbar').css('padding', '0.8rem 1rem');
+                    $('.navbar').css('box-shadow', '0 2px 4px rgba(0, 0, 0, 0.08)');
+                }
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
